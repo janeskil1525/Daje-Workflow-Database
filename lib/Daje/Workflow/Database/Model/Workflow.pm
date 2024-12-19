@@ -1,4 +1,4 @@
-package Daje::Workflow::Database::Pg::Workflow;
+package Daje::Workflow::Database::Model::Workflow;
 use Mojo::Base -base, -signatures;
 
 has 'db';
