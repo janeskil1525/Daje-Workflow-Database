@@ -43,6 +43,4 @@ sub save($self, $data) {
     return $data->{workflow_pkey};
 }
 
-s
-
 1;
