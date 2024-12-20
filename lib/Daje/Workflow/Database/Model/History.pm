@@ -10,8 +10,11 @@ sub load_list($self, $workflow_fkey) {
             workflow_fkey => $workflow_fkey
         }
     );
+    my $hashes;
 
+    $hashes = $data->hashes if $data->rows > 0;
 
+    return $hashes;
 }
 
 sub insert($self, $data) {

@@ -10,6 +10,11 @@ sub load($self, $workflow_pkey) {
             workflow_pkey => $workflow_pkey
         }
     );
+
+    my $hash;
+    $hash = $data->hash if $data->rows > 0;
+
+    return $hash;
 }
 
 sub save($self, $data) {
