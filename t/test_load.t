@@ -4,12 +4,22 @@ use warnings;
 use Test::More;
 
 use Mojo::Pg;
+use Daje::Workflow::Database;;
 
 sub load() {
     my $pg = Mojo::Pg->new()->dsn(
-        "dbi:Pg:dbname=Venditabant;host=DATABASE;port=5432;user=test;password=test"
+        "dbi:Pg:dbname=Workflowtest;host=database;port=54321;user=test;password=test"
     );
+
+    my $database = Daje::Workflow::Database->new(
+        pg => $pg,
+        db => $pg->db,
+    );
+
+
 }
+
+ok(load() ==1);
 
 done_testing();
 

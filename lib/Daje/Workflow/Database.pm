@@ -32,52 +32,36 @@ use Mojo::Base -base, -signatures;
 #
 
 use Mojo::Pg;
-use Daje::Workflow::Database::Model::Workflow;
-use Daje::Workflow::Database::Model::Context;
+use Daje::Workflow::Database::Connector;
 
 our $VERSION = "0.01";
 
+has 'pg';
 has 'db';
-has 'config';
 has 'workflow_pkey';
+has 'workflow';
+has 'connector';
 
-sub load($self, $workflow_pkey) {
-    my $data->{workflow} = $self->load_workflow($workflow_pkey);
-    $data->{context} = $self->load_context($workflow_pkey);
-    return $data;
-}
-
-sub save($self, $workflow_data, $context_data) {
-    my $workflow_pkey = $self->save_workflow($workflow_data);
-    $self->save_context($workflow_pkey, $context_data);
-
-}
-
-sub load_workflow($self, $workflow_pkey) {
-    my $data = Daje::Workflow::Database::Model::Workflow->new(
-        db => $self->pg
-    )->load(
-        $workflow_pkey
+sub start($self) {
+    my $connector = Daje::Workflow::Database::Connector->new(
+        workflow_pkey => $self->workflow_pkey(),
+        workflow      => $self->workflow(),
+        pg            => $self->pg,
+        db            => $self->db,
     );
-    return $data;
+    $self->connector($connector);
+    return $self->connector->start();
 }
 
-sub load_context($self, $workflow_pkey) {
-
+sub stop($self, $workflow_data, $context_data) {
+    $self->connector->stop($workflow_data, $context_data);
 }
 
-sub save_context($self, $workflow_pkey, $data) {
 
-}
 
-sub save_workflow($self, $data) {
-    my $workflow_pkey = Daje::Workflow::Database::Model::Workflow->new(
-        db => $self->pg
-    )->save(
-        $data
-    );
-    return $workflow_pkey;
-}
+
+
+
 1;
 __END__
 
