@@ -21,7 +21,7 @@ sub insert($self, $data) {
     $self->db->insert(
         'history',
         {
-            $data
+            %$data
         }
     );
 }

@@ -2,12 +2,14 @@ package Daje::Workflow::Database::Model::Context;
 use Mojo::Base -base, -signatures;
 
 has 'db';
+has 'context_pkey';
 
-sub load($self, $workflow_fkey) {
+
+sub load($self) {
     my $data = $self->db->select(
         'context',
         {
-            workflow_fkey => $workflow_fkey
+            context_pkey => $self->context_pkey
         }
     );
 
@@ -17,30 +19,35 @@ sub load($self, $workflow_fkey) {
     return $hash;
 }
 
+sub _load($self) {
+
+}
+
 sub save($self, $data) {
-    if ($data->{workflow_fkey} > 0) {
+
+    if ($data->{context_pkey} > 0) {
         $self->db->update(
             'context',
             {
-                $data
+                %$data
             },
             {
-                workflow_fkey => $data->{workflow_fkey}
+                context_pkey => $data->{context_pkey}
             }
         )
     } else {
-        $data->{workflow_fkey} = $self->db->insert(
+        $data->{context_pkey} = $self->db->insert(
             'context',
             {
-                $data
+                %$data
             },
             {
-                returning => 'workflow_fkey'
+                returning => 'context_pkey'
             }
-        )->hash->{workflow_fkey}
+        )->hash->{context_pkey}
     }
 
-    return $data->{workflow_pkey};
+    return $data->{context_pkey};
 }
 
 1;

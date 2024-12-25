@@ -13,9 +13,10 @@ has 'workflow';
 
 sub start($self) {
 
-    $self->pg->migrate->from_date(
-        'workflow', 'Daje::Workflow::Database::Connector'
-    );
+
+    $self->pg->migrations->name('workflow')->from_data(
+        'Daje::Workflow::Database::Connector', 'workflow'
+    )->migrate(1);
 
     my $data = $self->load();
 
@@ -34,13 +35,13 @@ sub load($self ) {
     return $data;
 }
 
-sub load_workflow($self, $workflow_pkey) {
+sub load_workflow($self) {
     my $data = Daje::Workflow::Database::Model::Workflow->new(
-        db => $self->db
-    )->load(
+        db => $self->db,
         workflow_pkey => $self->workflow_pkey,
         workflow      => $self->workflow,
-    );
+    )->load();
+
     return $data;
 }
 

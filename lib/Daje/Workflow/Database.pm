@@ -34,7 +34,7 @@ use Mojo::Base -base, -signatures;
 use Mojo::Pg;
 use Daje::Workflow::Database::Connector;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 has 'pg';
 has 'db';

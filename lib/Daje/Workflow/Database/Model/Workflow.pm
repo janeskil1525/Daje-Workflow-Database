@@ -2,12 +2,25 @@ package Daje::Workflow::Database::Model::Workflow;
 use Mojo::Base -base, -signatures;
 
 has 'db';
+has 'workflow_pkey';
+has 'workflow';
 
-sub load($self, $workflow_pkey) {
+sub load($self) {
+
+    my $result = $self->_load();
+    unless (defined $result) {
+        my $data->{name} = $self->workflow();
+        $data->{state} = 'INITIAL';
+        $data->{workflow_pkey} = 0;
+        $self->save($data)
+    }
+}
+
+sub _load($self) {
     my $data = $self->db->select(
         'workflow',
         {
-            workflow_pkey => $workflow_pkey
+            workflow_pkey => $self->workflow_pkey
         }
     );
 
@@ -17,22 +30,24 @@ sub load($self, $workflow_pkey) {
     return $hash;
 }
 
-sub save($self, $data) {
+sub save ($self, $data) {
+
     if ($data->{workflow_pkey} > 0) {
         $self->db->update(
             'workflow',
             {
-                $data
+                %$data
             },
             {
                 workflow_pkey => $data->{workflow_pkey}
             }
         )
     } else {
+        delete %$data{workflow_pkey};
         $data->{workflow_pkey} = $self->db->insert(
             'workflow',
                 {
-                    $data
+                    %$data
                 },
                 {
                     returning => 'workflow_pkey'
