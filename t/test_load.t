@@ -35,7 +35,6 @@ sub load_first_time() {
         "dbi:Pg:dbname=Workflowtest;host=database;port=54321;user=test;password=test"
     );
     my $context->{path};
-    my $wfl_data->{action} = "GenerateSQL";
 
     my $db = $pg->db;
     my $tx = $db->begin();
@@ -45,7 +44,6 @@ sub load_first_time() {
         workflow      => 'testflow',
         workflow_pkey => 0,
         context       => $context,
-        wfl_data      => $wfl_data,
     );
 
     $database->start();

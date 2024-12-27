@@ -50,7 +50,6 @@ has 'workflow_pkey';
 has 'workflow';
 has 'connector';
 has 'context';
-has 'wfl_data';
 
 sub start($self) {
     my $connector = Daje::Workflow::Database::Connector->new(
