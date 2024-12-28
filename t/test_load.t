@@ -6,8 +6,9 @@ use Test::More;
 use Mojo::Pg;
 use Daje::Workflow::Database;;
 
-my $devtest = 0;
+
 sub migrate() {
+    my $devtest = 0;
 
     if ($devtest == 1) {
         my $pg = Mojo::Pg->new()->dsn(
@@ -21,6 +22,7 @@ sub migrate() {
 
     return 1;
 }
+
 ok(migrate() ==1);
 
 done_testing();

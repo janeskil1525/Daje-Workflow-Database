@@ -1,27 +1,20 @@
 [![Actions Status](https://github.com/janeskil1525/Daje-Workflow-Database/actions/workflows/test.yml/badge.svg)](https://github.com/janeskil1525/Daje-Workflow-Database/actions)
 # NAME
 
-Daje::Workflow::Database - It's the database plugin for Daje::Workflow
+Daje::Workflow::Database - It's the database migrate plugin for Daje::Workflow
 
 # SYNOPSIS
 
     use Daje::Workflow::Database;
-    my $database = Daje::Workflow::Database->new(
+    Daje::Workflow::Database->new(
          pg            => $pg,
-         db            => $db,
-         workflow      => $workflowname,
-         workflow_pkey => 0,
-         context       => $context,
-         wfl_data      => $wfl_data,
-     );
+     )->migrate();
 
 # DESCRIPTION
 
-Daje::Workflow::Database is the Database plugin for Daje::Workflow
+Daje::Workflow::Database is the Database migrate plugin for Daje::Workflow
 
 # REQUIRES
-
-[Daje::Workflow::Database::Connector](https://metacpan.org/pod/Daje%3A%3AWorkflow%3A%3ADatabase%3A%3AConnector) 
 
 [Mojo::Pg](https://metacpan.org/pod/Mojo%3A%3APg) 
 
@@ -29,13 +22,9 @@ Daje::Workflow::Database is the Database plugin for Daje::Workflow
 
 # METHODS
 
-## start($self)
+## migrate($self)
 
-    start($self)();
-
-## stop($self,
-
-    stop($self,();
+    migrate($self)();
 
 # AUTHOR
 
