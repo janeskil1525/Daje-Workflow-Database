@@ -6,8 +6,12 @@ Daje::Workflow::Database - It's the database migrate plugin for Daje::Workflow
 # SYNOPSIS
 
     use Daje::Workflow::Database;
+
+    push @{$migrations}, {class => 'Daje::Workflow::Database', name => 'workflow', migration => 2};
+
     Daje::Workflow::Database->new(
          pg            => $pg,
+         migrations    => $migrations,
      )->migrate();
 
 # DESCRIPTION
@@ -16,7 +20,7 @@ Daje::Workflow::Database is the Database migrate plugin for Daje::Workflow
 
 # REQUIRES
 
-[Mojo::Pg](https://metacpan.org/pod/Mojo%3A%3APg) 
+[Mojo::Loader](https://metacpan.org/pod/Mojo%3A%3ALoader) 
 
 [Mojo::Base](https://metacpan.org/pod/Mojo%3A%3ABase) 
 
